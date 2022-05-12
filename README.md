@@ -21,3 +21,8 @@ Support for spheres and triangles:
 Focus blur:
 
 ![Focus blur](src/image-focusblur.png)
+
+## Credit
+Inspired by:
+
+[_Ray Tracing in One Weekend_](https://raytracing.github.io/books/RayTracingInOneWeekend.html)
