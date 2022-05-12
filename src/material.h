@@ -88,4 +88,26 @@ private:
 	}
 };
 
+class light : public material {
+public:
+	light(const color& a, double i) : albedo(a), light_intensity(i < 1 ? 1 : i) {}
+
+	virtual bool scatter(
+		const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered
+		) const override {
+		auto scatter_direction = rec.normal + random_unit_vector();
+
+		if (scatter_direction.near_zero())
+			scatter_direction = rec.normal;
+
+		scattered = ray(rec.p, scatter_direction);
+		attenuation = light_intensity * albedo;
+		return true;
+	}
+
+public: 
+	color albedo;
+	double light_intensity;
+};
+
 #endif
