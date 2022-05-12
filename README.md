@@ -11,10 +11,13 @@
 
 ## Demo
 Multiple materials:
+
 ![Light-emitting material](src/image-light.png)
 
 Support for spheres and triangles:
+
 ![Spheres and triangles](src/image-triangle.png)
 
 Focus blur:
+
 ![Focus blur](src/image-focusblur.png)
