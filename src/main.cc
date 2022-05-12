@@ -8,6 +8,7 @@
 #include "material.h"
 
 #include <iostream>
+#include <omp.h>
 
 color ray_color(const ray& r, const hittable& world, int depth) {
 	hit_record rec;
@@ -27,7 +28,7 @@ color ray_color(const ray& r, const hittable& world, int depth) {
 	return (1.0-t)*color(1.0, 1.0, 1.0) + t*color(0.5, 0.7, 1.0);
 }
 
-/*hittable_list random_scene() {
+hittable_list random_scene() {
     hittable_list world;
 
     auto ground_material = make_shared<lambertian>(color(0.5, 0.5, 0.5));
@@ -71,8 +72,8 @@ color ray_color(const ray& r, const hittable& world, int depth) {
     world.add(make_shared<sphere>(point3(4, 1, 0), 1.0, material3));
 
     return world;
-}*/
-hittable_list random_scene() {
+}
+/*hittable_list random_scene() {
 	hittable_list world;
 
 	auto ground_material = make_shared<lambertian>(color(0.5, 0.5, 0.5));
@@ -113,12 +114,12 @@ hittable_list random_scene() {
     }
 
 	return world;
-}
+}*/
 
 int main() {
 	// Image
 	const auto aspect_ratio = 3.0/2.0;
-	const int image_width = 400;
+	const int image_width = 500;
 	const int image_height = static_cast<int>(image_width / aspect_ratio);
 	const int samples_per_pixel = 100;
 	const int max_depth = 50;
@@ -142,8 +143,10 @@ int main() {
 
 	for (int j = image_height-1; j >= 0; --j) {
 		std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
+
 		for (int i = 0; i < image_width; ++i) {
 			color pixel_color(0, 0, 0);
+#pragma omp parallel for
 			for (int s = 0; s < samples_per_pixel; ++s) {
 				auto u = (i + random_double()) / (image_width-1);
 				auto v = (j + random_double()) / (image_height-1);
