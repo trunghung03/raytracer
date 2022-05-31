@@ -5,8 +5,8 @@
 
 class ray {
 public:
-	ray() {}
-	ray(const point3& origin, const vec3& direction)
+	ray() noexcept {}
+	ray(const point3& origin, const vec3& direction) noexcept
 		: orig(origin), dir(direction)
 	{}
 

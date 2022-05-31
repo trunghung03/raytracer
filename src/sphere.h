@@ -6,28 +6,28 @@
 
 class sphere : public hittable {
 public:
-	sphere() {}
-	sphere(point3 cen, double r, shared_ptr<material> m)
+	sphere() noexcept {}
+	sphere(point3 cen, double r, shared_ptr<material> m) noexcept
 	 : center(cen), radius(r), mat_ptr(m) {};
 
-	virtual bool hit(
+	bool hit(
 		const ray& r, double t_min, double t_max, hit_record& rec) const override;
 
 public: 
 	point3 center;
-	double radius;
+	double radius{};
 	shared_ptr<material> mat_ptr;
 };
 
 bool sphere::hit(const ray& r, double t_min, double t_max, hit_record& rec) const {
-	vec3 oc = r.origin() - center;
+	const vec3 oc = r.origin() - center;
 	const auto a = r.direction().length_squared();
 	const auto half_b = dot(oc, r.direction());
 	const auto c = oc.length_squared() - radius*radius;
 
-	auto discriminant = half_b*half_b - a*c;
+	const auto discriminant = half_b*half_b - a*c;
 	if (discriminant < 0) return false;
-	auto sqrtd = sqrt(discriminant);
+	const auto sqrtd = sqrt(discriminant);
 	t_min *= a;
 	t_max *= a;
 
@@ -39,10 +39,10 @@ bool sphere::hit(const ray& r, double t_min, double t_max, hit_record& rec) cons
 			return false;
 	}
 
-	auto root = root_without_a / a;
+	const auto root = root_without_a / a;
 	rec.t = root;
 	rec.p = r.at(rec.t);
-	vec3 outward_normal = (rec.p - center) / radius;
+	const vec3 outward_normal = (rec.p - center) / radius;
 	rec.set_face_normal(r, outward_normal);
 	rec.mat_ptr = mat_ptr;
 

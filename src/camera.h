@@ -14,10 +14,10 @@ public:
 		double aperture,
 		double focus_dist
 		) {
-		auto theta = degrees_to_radians(vfov);
-		auto h = tan(theta/2);
-		auto viewport_height = 2.0*h;
-		auto viewport_width = aspect_ratio * viewport_height;
+		const auto theta = degrees_to_radians(vfov);
+		const auto h = tan(theta/2);
+		const auto viewport_height = 2.0*h;
+		const auto viewport_width = aspect_ratio * viewport_height;
 
 		w = unit_vector(lookfrom - lookat);
 		u = unit_vector(cross(vup, w));
@@ -32,8 +32,8 @@ public:
 	}
 
 	ray get_ray(double s, double t) const {
-		vec3 rd = lens_radius * random_in_unit_disk();
-		vec3 offset = u * rd.x() + v * rd.y();
+		const vec3 rd = lens_radius * random_in_unit_disk();
+		const vec3 offset = u * rd.x() + v * rd.y();
 
 		return ray(origin + offset, 
 			lower_left_corner + s*horizontal + t*vertical - origin - offset);

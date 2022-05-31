@@ -11,7 +11,7 @@ void write_color(std::ostream &out, color pixel_color, int samples_per_pixel) {
 	auto b = pixel_color.z();
 
 	// Divide the color by number of samples
-	auto scale = 1.0 / samples_per_pixel;
+	const auto scale = 1.0 / samples_per_pixel;
 	r = sqrt(scale * r);
 	g = sqrt(scale * g);
 	b = sqrt(scale * b);
